@@ -1,0 +1,19 @@
+name: actions/project-vars
+description: Extract multiple project vars to GITHUB_ENV
+
+runs:
+  using: composite
+  steps:
+    - name: Send simple ntfy message
+      shell: sh
+      run: |
+        set -euo pipefail
+        VERSION=$(cat ${GITHUB_WORKSPACE}/VERSION)
+        REPO="${{ gitea.repository }}"
+        REPO_OWNER="${REPO%/*}"
+        REPO_NAME="${REPO#*/}"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "REPO_OWNER=$REPO_OWNER" >> $GITHUB_ENV
+        echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+        echo "DOCKER_PATH=${REGISTRY_HOST}/${REPO_OWNER}/${REPO_NAME}" >> $GITHUB_ENV
+        echo "DOCKER_IMAGE_URL=https://${REGISTRY_HOST}/${REPO_OWNER}/-/packages/container/${REPO_NAME}/$VERSION" >> $GITHUB_ENV
