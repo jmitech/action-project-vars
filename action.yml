@@ -7,7 +7,7 @@ runs:
     - name: Extracts multiple vars to github env vars
       shell: sh
       run: |
-        set -euo pipefail
+        set -euo
         VERSION=$(cat ${GITHUB_WORKSPACE}/VERSION)
         REPO="${{ gitea.repository }}"
         REPO_OWNER="${REPO%/*}"
@@ -15,5 +15,5 @@ runs:
         echo "VERSION=$VERSION" >> $GITHUB_ENV
         echo "REPO_OWNER=$REPO_OWNER" >> $GITHUB_ENV
         echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
-        echo "DOCKER_PATH=${REGISTRY_HOST:-g.ll1.ca}/${REPO_OWNER}/${REPO_NAME}" >> $GITHUB_ENV
-        echo "DOCKER_IMAGE_URL=https://${REGISTRY_HOST:-g.ll1.ca}/${REPO_OWNER}/-/packages/container/${REPO_NAME}/$VERSION" >> $GITHUB_ENV
+        echo "DOCKER_PATH=${REGISTRY_HOST:-hub.docker.com}/${REPO_OWNER}/${REPO_NAME}" >> $GITHUB_ENV
+        echo "DOCKER_IMAGE_URL=https://${REGISTRY_HOST:-hub.docker.com}/${REPO_OWNER}/-/packages/container/${REPO_NAME}/$VERSION" >> $GITHUB_ENV
